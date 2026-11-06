@@ -915,7 +915,7 @@ export const ShopCategoryPage: React.FC<ShopCategoryPageProps> = ({
   };
 
   // If a product is clicked, render Image 4: Dedicated Product Details Page!
-  const activeViewingProduct = viewingProduct || selectedProduct;
+  const activeViewingProduct = viewingProduct;
   if (activeViewingProduct) {
     return (
       <ProductDetailsPage

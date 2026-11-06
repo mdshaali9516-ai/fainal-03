@@ -376,7 +376,7 @@ export const PublicStorefront: React.FC = () => {
   const isSearchActive = Boolean(publicSearch && publicSearch.trim().length > 0);
 
   // If viewing a product, render dedicated Product Details / Order Page!
-  const activeViewingProduct = viewingProduct || selectedProduct;
+  const activeViewingProduct = viewingProduct;
   if (activeViewingProduct) {
     const activeList = sortedAndFilteredProducts.length > 0 ? sortedAndFilteredProducts : products;
     return (

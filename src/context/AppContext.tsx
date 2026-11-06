@@ -297,27 +297,24 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [selectedProduct, setSelectedProductState] = useState<Product | null>(null);
 
   const setSelectedProduct = useCallback((product: Product | null) => {
-    setSelectedProductState(prev => {
-      if (prev === product) return prev;
-      if (product && !isNavigatingBackRef.current) {
+    setSelectedProductState(product);
+    if (product && !isNavigatingBackRef.current) {
+      try {
+        window.history.pushState(
+          { appModal: 'product-details', id: product.id },
+          '',
+          window.location.pathname + window.location.search + '#product'
+        );
+      } catch {}
+    } else if (!product && !isNavigatingBackRef.current) {
+      if (typeof window !== 'undefined' && window.history.state?.appModal === 'product-details') {
         try {
-          window.history.pushState(
-            { appModal: 'product-details', id: product.id },
-            '',
-            window.location.pathname + window.location.search + '#product'
-          );
+          isNavigatingBackRef.current = true;
+          window.history.back();
+          setTimeout(() => { isNavigatingBackRef.current = false; }, 100);
         } catch {}
-      } else if (!product && prev && !isNavigatingBackRef.current) {
-        if (typeof window !== 'undefined' && window.history.state?.appModal === 'product-details') {
-          try {
-            isNavigatingBackRef.current = true;
-            window.history.back();
-            setTimeout(() => { isNavigatingBackRef.current = false; }, 100);
-          } catch {}
-        }
       }
-      return product;
-    });
+    }
   }, []);
 
   const [showPromo, setShowPromoState] = useState<boolean>(true);

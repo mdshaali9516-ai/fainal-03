@@ -49,6 +49,7 @@ export const VisualSearchModal: React.FC = () => {
       setResellerTab('catalog');
       setResellerPreviewProduct(product);
     } else {
+      setActivePortal('public');
       setSelectedProduct(product);
     }
   };
